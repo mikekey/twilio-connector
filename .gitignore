@@ -2,7 +2,9 @@
 /.settings
 /.project
 /.jruby
-/*.iml
-/*.ipr
-/*.iws
-/target
+*.iml
+*.ipr
+*.iws
+target
+.idea/
+atlassian-ide-plugin.xml

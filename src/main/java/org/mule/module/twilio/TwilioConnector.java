@@ -682,6 +682,7 @@ public class TwilioConnector {
      * @param sendDigits     A string of keys to dial after connecting to the number. Valid digits in the string include: any digit (0-9), '#' and '*'. For example, if you connected to a company phone number, and wanted to dial extension 1234 and then the pound key, use SendDigits=1234#. Remember to URL-encode this string, since the '#' character has special meaning in a URL.
      * @param ifMachine      Tell Twilio to try and determine if a machine (like voicemail) or a human has answered the call. Possible values are Continue and Hangup.
      * @param timeout        The integer number of seconds that Twilio should allow the phone to ring before assuming there is no answer. Default is 60 seconds, the maximum is 999 seconds. Note, you could set this to a low value, such as 15, to hangup before reaching an answering machine or voicemail.
+     * @param statusCallbackUrl A URL to callback to in case you happen to be using API Kit.
      * @return the call representation.
      */
     @Processor
@@ -693,10 +694,11 @@ public class TwilioConnector {
                            @Placement(group = "Voice Settings") @Optional HttpMethod method,
                            @Placement(group = "Callbacks") @Optional HttpCallback fallback,
                            @Placement(group = "Callbacks") @Optional HttpCallback statusCallback,
+                           @Placement(group = "Callbacks") @Optional String statusCallbackUrl,
                            @Placement(group = "Advanced") @Optional String sendDigits,
                            @Placement(group = "Advanced") @Optional String ifMachine,
                            @Placement(group = "Advanced") @Optional String timeout) {
-        return twilioClient.makeCall(accountSid, from, to, url, applicationSid, method, fallback, statusCallback, sendDigits, ifMachine, timeout);
+        return twilioClient.makeCall(accountSid, from, to, url, applicationSid, method, fallback, statusCallback, statusCallbackUrl, sendDigits, ifMachine, timeout);
     }
 
     /**

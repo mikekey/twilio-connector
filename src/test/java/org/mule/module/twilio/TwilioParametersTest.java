@@ -13,8 +13,11 @@ import org.junit.Test;
 import org.mule.module.twilio.TwilioParameters.TwilioParamater;
 import org.mule.module.twilio.TwilioParameters.TwilioParametersStategy;
 
+import java.util.Map;
+
 import static org.fest.assertions.Assertions.assertThat;
 import static org.fest.assertions.MapAssert.entry;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 public class TwilioParametersTest {
@@ -41,6 +44,14 @@ public class TwilioParametersTest {
         TwilioParameters twilioParameters = new TwilioParameters(TwilioParametersStategy.ALL_REQUIRED).
                 addIfValueNotNull(PARAMETER_A, null);
         twilioParameters.getMap();
+    }
+
+    @Test
+    public void testWithStatusCallbackUrl() {
+        TwilioParameters twilioParameters = new TwilioParameters(TwilioParametersStategy.ALL_OPTIONAL)
+                .addIfValueNotNull(TwilioParamater.STATUS_CALLBACK_URL, "foo");
+        Map<String, String> map = twilioParameters.getMap();
+        assertNotNull(map);
     }
 
     @Test

@@ -317,7 +317,7 @@ public class TwilioClient {
     }
 
     public String makeCall(String accountSid, String from, String to, String url, String applicationSid, HttpMethod method,
-                           HttpCallback fallback, HttpCallback statusCallback, String sendDigits, String ifMachine, String timeout) {
+                           HttpCallback fallback, HttpCallback statusCallback, String statusCallbackUrl, String sendDigits, String ifMachine, String timeout) {
         TwilioParameters toFromParams = new TwilioParameters(TwilioParametersStategy.ALL_REQUIRED).
                 addIfValueNotNull(TwilioParamater.TO, to).
                 addIfValueNotNull(TwilioParamater.FROM, from);
@@ -329,14 +329,20 @@ public class TwilioClient {
                 addIfValueNotNull(TwilioParamater.SEND_DIGITS, sendDigits).
                 addIfValueNotNull(TwilioParamater.IF_MACHINE, ifMachine).
                 addIfValueNotNull(TwilioParamater.TIMEOUT, timeout);
+
+        if (statusCallbackUrl != null) {
+            optionalParams.addIfValueNotNull(TwilioParamater.STATUS_CALLBACK, statusCallbackUrl);
+            optionalParams.addIfValueNotNull(TwilioParamater.STATUS_CALLBACK_METHOD, DEFAULT_CALLBACK_HTTP_METHOD);
+        } else if (statusCallback != null) {
+            optionalParams.addIfValueNotNull(TwilioParamater.STATUS_CALLBACK, statusCallback.getUrl());
+            optionalParams.addIfValueNotNull(TwilioParamater.STATUS_CALLBACK_METHOD, DEFAULT_CALLBACK_HTTP_METHOD);
+        }
+
         if (fallback != null) {
             optionalParams.addIfValueNotNull(TwilioParamater.FALLBACK_URL, fallback.getUrl());
             optionalParams.addIfValueNotNull(TwilioParamater.FALLBACK_METHOD, DEFAULT_CALLBACK_HTTP_METHOD);
         }
-        if (statusCallback != null) {
-            optionalParams.addIfValueNotNull(TwilioParamater.STATUS_CALLBACK, statusCallback.getUrl());
-            optionalParams.addIfValueNotNull(TwilioParamater.STATUS_CALLBACK_METHOD, DEFAULT_CALLBACK_HTTP_METHOD);
-        }
+
 
         return twilioRequestExecutor.executePostRequest(getUri(accountSid) + "/Calls/", toFromParams, urlOrApplicationSidParams, optionalParams);
     }

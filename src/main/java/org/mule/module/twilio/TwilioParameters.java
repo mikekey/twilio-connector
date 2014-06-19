@@ -77,6 +77,7 @@ public class TwilioParameters {
         VOICE_FALLBACK_URL("VoiceFallbackUrl"),
         VOICE_FALLBACK_METHOD("VoiceFallbackMethod"),
         STATUS_CALLBACK("StatusCallback"),
+        STATUS_CALLBACK_URL("StatusCallbackUrl"),
         STATUS_CALLBACK_METHOD("StatusCallbackMethod"),
         VOICE_CALLER_ID_LOOKUP("VoiceCallerIdLookup"),
         VOICE_APPLICATION_SID("VoiceApplicationSid"),
